@@ -8,7 +8,7 @@ const userSchema= new mongoose.Schema({
     userName:{
         type:String,
         required:true,
-        lowerCase:true,
+        lowercase:true,
     },
     email:{
         type:String,
@@ -17,6 +17,17 @@ const userSchema= new mongoose.Schema({
     password:{
         type:String,
         required:true,
+    },
+    avatar:{
+        type:String,
+        required:true,
+    },
+    bio:{
+        type:String,
+    },
+    role:{
+        enum:["user","admin"],
+        default:"user",
     },
 },{timestamps:true})
 
