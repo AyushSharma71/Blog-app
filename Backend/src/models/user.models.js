@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const userSchema= new mongoose.Schema({
-    fullName:{
+    fullname:{
         type:String,
         required:true,
     },
-    userName:{
+    username:{
         type:String,
         required:true,
         lowercase:true,
@@ -20,12 +20,12 @@ const userSchema= new mongoose.Schema({
     },
     avatar:{
         type:String,
-        required:true,
     },
     bio:{
         type:String,
     },
     role:{
+        type:String,
         enum:["user","admin"],
         default:"user",
     },

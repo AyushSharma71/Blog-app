@@ -30,6 +30,10 @@ const postSchema= new mongoose.Schema({
         type:Number,
         default:0,
     },
+    createdBy:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+    },
 },{timestamps:true})
 
 const likeSchema= new mongoose.Schema({
@@ -43,6 +47,8 @@ const likeSchema= new mongoose.Schema({
     },
 },{timestamps:true})
 
+
+// mongodb ka middleware hai jisme slug ko save hone se pehle save krege title koslug me convert krke save krdega
 postSchema.pre("save",function(next){
     if(!this.isModified("title"))
         return next();

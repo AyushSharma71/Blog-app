@@ -10,5 +10,5 @@ app.use(express.json());
 import userrouter from "./router/router.route.js";
 app.use("/api/v1",userrouter);
 
-// http://localhost:5000/api/v1/user
+// http://localhost:5000/api/v1/register
 export {app};
