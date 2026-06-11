@@ -85,7 +85,7 @@ const loginuser = async (req, res) => {
  */
 const userprofile = async (req, res) => {
     try {
-        const { bio, role } = req.body;
+        const { bio, role="user"} = req.body;
 
         const avatarlocal = req.file?.path
             || req.files?.avatar?.[0]?.path
