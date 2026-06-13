@@ -33,6 +33,6 @@ FOR IMAGE UPLOADS<br>
 - Deploy on cloud(vercel/render)
 
 
-##AUTHOR
+##AUTHOR<br>
 Ayush Sharma
 
