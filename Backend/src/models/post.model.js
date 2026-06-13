@@ -7,7 +7,6 @@ const postSchema = new mongoose.Schema({
     },
     slug: {
         type: String,
-        required: true,
         lowercase: true,
         unique: true,
     },
@@ -23,13 +22,16 @@ const postSchema = new mongoose.Schema({
         ref: "User",
     },
     status: {
+        type: String,
         enum: ["draft", "published"],
         default: "draft",
     },
-    likescount: {
-        type: Number,
-        default: 0,
-    },
+    likescount:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User",
+        }
+    ]
 }, { timestamps: true })
 
 const likeSchema = new mongoose.Schema({
@@ -45,11 +47,12 @@ const likeSchema = new mongoose.Schema({
 
 
 // mongodb ka middleware hai jisme slug ko save hone se pehle save krege title koslug me convert krke save krdega
-postSchema.pre("save", function (next) {
-    if (!this.isModified("title"))
-        return next();
+postSchema.pre("save", function() {
+    if (!this.isModified("title")){
+        return;
+    }
+
     this.slug = slugify(this.title, { lower: true });
-    next();
 });
 
 export const Post = mongoose.model("Post", postSchema);

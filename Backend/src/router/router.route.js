@@ -1,20 +1,33 @@
 import { Router } from 'express';
 import {
-    registeruser, userprofile, loginuser,logoutuser,
+    registeruser, userprofile, loginuser, logoutuser,
 }
     from "../controller/user.controller.js";
-import { postcreated } from '../controller/post.controller.js';
+import userValidation from '../middleware/validation.middleware.js';
+import {
+    postcreated, postliked
+} from '../controller/post.controller.js';
 import { upload } from '../middleware/multer.middleware.js';
 import authMiddleware from '../middleware/auth.middleware.js';
+
 const router = Router();
 
-router.route("/register").post(registeruser);
+
+// These are User routes 
+router.route("/register").post(userValidation, registeruser);
 router.route("/login").post(loginuser);
-router.route("/makeprofile/:id").put(upload.fields([{
+router.route("/makeprofile").put(upload.fields([{
     name: "avatar", maxCount: 1
 }]), authMiddleware, userprofile);
-router.route("/logout/:id").post(authMiddleware,logoutuser);
-router.route("/postcreated/:id").post(authMiddleware,postcreated);
+router.route("/logout").post(authMiddleware, logoutuser);
+
+
+// These are post routes    
+router.route("/postcreated").post(upload.fields([{
+    name: "coverimage", maxCount: 1
+}]), authMiddleware, postcreated);
+
+router.route("/postliked/:id").put(authMiddleware, postliked);
 
 
 export default router;

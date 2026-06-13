@@ -1,7 +1,7 @@
 import { Apierror } from "../utils/Apierror.js";
 import { User } from "../models/user.models.js";
 import { uploadImage } from "../utils/cloudinary.js";
-import bcrypt from "bcrypt";
+import bcrypt, { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 const registeruser = async (req, res) => {
     /* user details from req.body
@@ -56,7 +56,7 @@ const loginuser = async (req, res) => {
             throw new Apierror(400, "username does not exists");
         }
         /**isme password jo database mein h aur second wala jo abhi diya ja rha hai  */
-        const decodedpass = await bcrypt.compare(password, userexist.password);
+        const decodedpass = await userexist.comparepassword(password);
 
         if (decodedpass) {
             const token = jwt.sign(
@@ -64,6 +64,7 @@ const loginuser = async (req, res) => {
                 process.env.JWT_SECRET,
                 { expiresIn: process.env.JWT_SECRET_EXPIRY }
             )
+            res.cookie("token", token);
             res.status(201).json({
                 "message": "Login successful",
                 token,
@@ -132,6 +133,7 @@ const logoutuser = async(req,res) =>{
             throw new Apierror(401,"logout failed");
         }
         else{
+            res.clearCookie("token");
             res.status(200).json({
                 message:"Logout successful",
             })
