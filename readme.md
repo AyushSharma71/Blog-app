@@ -2,18 +2,18 @@
 A backend application for blogging app built using node.js,expressjs,mongodb.
 
 
-TECH STACK USED:-
-Express js - for routing 
+TECH STACK USED:-<br>
+Express js - for routing<br>
 Mongodb - for database 
 
-FOR AUTHENTICATION
- jwt
- bcrypt
- Cookie parser
+FOR AUTHENTICATION<br>
+ jwt<br>
+ bcrypt<br>
+ Cookie parser<br>
 
-FOR IMAGE UPLOADS
- Multer
- Cloudinary 
+FOR IMAGE UPLOADS<br>
+ Multer<br>
+ Cloudinary <br>
  
 ##FEATURES 
 - User Authentication (Signup & Login with JWT)
@@ -22,15 +22,15 @@ FOR IMAGE UPLOADS
 - create blog with the image.
 
 ##LEARNING
--Authentication with jwt.
--upload image using multer and cloudinary.
--validation of a user.
--Hooks and methods of mongodb.
+- Authentication with jwt.
+- upload image using multer and cloudinary.
+- validation of a user.
+- Hooks and methods of mongodb.
 
 ##FUTURE IMPROVEMENTS
--Add Comment feature 
--Build frontend side 
--Deploy on cloud(vercel/render)
+- Add Comment feature 
+- Build frontend side 
+- Deploy on cloud(vercel/render)
 
 
 ##AUTHOR
