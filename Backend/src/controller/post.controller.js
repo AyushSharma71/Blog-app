@@ -60,7 +60,41 @@ const postliked = async(req,res)=>{
     }
 }
 
+const postunliked = async(req,res)=>{
+    try {
+        const userId=req.user?.id;
+        const postId=req.params.id;
+        
+        const updatedpost = await Post.findByIdAndUpdate(
+            postId,
+            {$pull:{likescount:userId}},
+            {new:true,runValidators:true});
+        if(!updatedpost){
+            throw new Apierror(404,"Post not found");
+        }
+        return res.json({success:true,updatedpost});
+    }   catch (error) { 
+        res.status(error.statuscode ||500).json({
+            success:false,
+            message:error.message||"Internal server error"
+        })
+    }
+}
+
+const allpost = async(req,res)=>{
+    try {
+        const posts = await Post.find().populate("author","name email");
+        return res.json({success:true,posts});
+    } catch (error) {
+        res.status(error.statuscode ||500).json({
+            success:false,
+            message:error.message||"Internal server error"
+        })
+    }
+}
 export {
     postcreated,
-    postliked
+    postliked,
+    postunliked,
+    allpost
 }

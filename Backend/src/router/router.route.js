@@ -5,7 +5,7 @@ import {
     from "../controller/user.controller.js";
 import userValidation from '../middleware/validation.middleware.js';
 import {
-    postcreated, postliked
+    postcreated, postliked, allpost,postunliked
 } from '../controller/post.controller.js';
 import { upload } from '../middleware/multer.middleware.js';
 import authMiddleware from '../middleware/auth.middleware.js';
@@ -23,11 +23,11 @@ router.route("/logout").post(authMiddleware, logoutuser);
 
 
 // These are post routes    
+router.route("/").get(authMiddleware, allpost);
 router.route("/postcreated").post(upload.fields([{
     name: "coverimage", maxCount: 1
 }]), authMiddleware, postcreated);
 
 router.route("/postliked/:id").put(authMiddleware, postliked);
-
-
+router.route("/postunliked/:id").put(authMiddleware, postunliked);
 export default router;
