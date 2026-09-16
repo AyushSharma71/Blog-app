@@ -10,6 +10,7 @@
   "author": "Ayush Sharma",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.20.0",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.10.0",
     "cookie-parser": "^1.4.7",

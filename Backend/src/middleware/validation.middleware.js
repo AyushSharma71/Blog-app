@@ -9,6 +9,11 @@ function validateResult(req, res, next) {
 }
 
 const userValidation = [
+    body('fullname')
+        .notEmpty().withMessage('Full name is required')
+        .isString().withMessage('Full name must be a string')
+        .isLength({ min: 2, max: 50 }).withMessage('Full name must be between 2 and 50 characters'),
+
     body('username')
         .notEmpty().withMessage('Username is required')
         .isString().withMessage('Username must be a string')
@@ -20,8 +25,8 @@ const userValidation = [
 
     body('password')
         .notEmpty().withMessage('Password is required')
-        .isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/).withMessage('Password must contain at least one letter and one number'),
+        .isLength({ min: 8, max: 128 }).withMessage('Password must be between 8 and 128 characters')
+        .matches(/^(?=.*[A-Za-z])(?=.*\d).+$/).withMessage('Password must contain at least one letter and one number'),
 
     validateResult,
 ];

@@ -29,4 +29,28 @@ const uploadImage = async (filePath) => {
     }
 }
 
-export {uploadImage};
+const destroyImage = async (publicId) => {
+    try {
+        const result = await cloudinary.uploader.destroy(publicId);
+        console.log("file deleted successfully");
+        return result;
+    }
+    catch (error) {
+        console.log("Error in file deleting", error);
+        throw error;
+    }
+}
+
+const destroyVideo = async (publicId) => {
+    try {
+        const result = await cloudinary.uploader.destroy(publicId, { invalidate: true, resource_type: "video" });
+        console.log("video deleted successfully");
+        return result;
+    }
+    catch (error) {
+        console.log("Error in video deleting", error);
+        throw error;
+    }
+}
+
+export {uploadImage, destroyImage, destroyVideo};

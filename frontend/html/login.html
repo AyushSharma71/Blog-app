@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: black;
+            color: white;
+        }
+        #login{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        input{
+            padding: 5px 8px;
+        }
+        form{
+            margin: 8rem;
+        }
+        #loginbtn{
+            margin-top: 18px;
+            padding: 2.8px 51px;
+            font-size: large;
+            font-weight: bold;
+            border-radius: 5px;
+            border: 2px solid pink;
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <form id="loginForm">
+        <div id="login">
+            username <br>
+            <input type="text" name="username" id="username" placeholder="Enter username">
+            <br>
+            password <br>
+            <input type="password" name="password" id="password" placeholder="******">
+            <button id="loginbtn">Login</button>
+        </div>
+    </form>
+</body>
+<script src="/Backend/node_modules/axios/dist/axios.min.js"></script>
+<script src="../javascript/register.js"></script>
+</html>

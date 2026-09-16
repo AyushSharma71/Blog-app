@@ -1,7 +1,7 @@
 import { Apierror } from "../utils/Apierror.js";
 import { User } from "../models/user.models.js";
 import { uploadImage } from "../utils/cloudinary.js";
-import bcrypt, { compare } from "bcrypt";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const registeruser = async (req, res) => {
     /* user details from req.body
@@ -25,12 +25,11 @@ const registeruser = async (req, res) => {
         if (existeduser) {
             throw new Apierror(401, "user already exists");
         }
-        const hashedpassword = await bcrypt.hash(password, 10);
         const user = await User.create({
             fullname,
             username: username.toLowerCase(),
             email,
-            password: hashedpassword,
+            password,
         })
         if (!user) {
             throw new Apierror(400, "user not created");
@@ -40,7 +39,7 @@ const registeruser = async (req, res) => {
         }
     } catch (error) {
         res.status(error.statuscode || 500).json({
-            "msg": "Internal server error"
+            message: error.message || "Internal server error"
         });
     }
 }
@@ -50,24 +49,26 @@ const loginuser = async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        const userexist = await User.findOne({ username });
+        const userexist = await User.findOne({ username: username.toLowerCase() });
 
         if (!userexist) {
             throw new Apierror(400, "username does not exists");
         }
         /**isme password jo database mein h aur second wala jo abhi diya ja rha hai  */
         const decodedpass = await userexist.comparepassword(password);
-
         if (decodedpass) {
             const token = jwt.sign(
                 { id: userexist._id },
                 process.env.JWT_SECRET,
                 { expiresIn: process.env.JWT_SECRET_EXPIRY }
             )
-            res.cookie("token", token);
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: false,
+                sameSite: "lax",
+            });
             res.status(201).json({
                 "message": "Login successful",
-                token,
                 user: {
                     username: userexist.username,
                     email: userexist.email,
